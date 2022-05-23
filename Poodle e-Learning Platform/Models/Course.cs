@@ -1,4 +1,7 @@
-﻿namespace Poodle_e_Learning_Platform.Models
+﻿using System;
+using System.Linq;
+
+namespace Poodle_e_Learning_Platform.Models
 {
     public class Course
     {

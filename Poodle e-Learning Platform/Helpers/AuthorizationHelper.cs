@@ -1,4 +1,6 @@
-﻿using Poodle_e_Learning_Platform.Models;
+﻿using Poodle_e_Learning_Platform.Exceptions;
+using Poodle_e_Learning_Platform.Models;
+using Poodle_e_Learning_Platform.Services.Contracts;
 
 namespace Poodle_e_Learning_Platform.Helpers
 {

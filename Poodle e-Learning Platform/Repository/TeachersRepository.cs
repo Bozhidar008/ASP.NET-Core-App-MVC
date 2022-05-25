@@ -1,5 +1,8 @@
-﻿using Poodle_e_Learning_Platform.Exceptions;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Poodle_e_Learning_Platform.Exceptions;
 using Poodle_e_Learning_Platform.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Poodle_e_Learning_Platform.Repository
 {
@@ -46,4 +49,4 @@ namespace Poodle_e_Learning_Platform.Repository
     }
 }
 
-}
+

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Poodle_e_Learning_Platform.Models
@@ -7,27 +9,27 @@ namespace Poodle_e_Learning_Platform.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public string Title { get; set; } // UNIQUE
 
+        [Required]
         public string Description { get; set; }
 
-        public int TeacherId { get; set; }
+        public int ApplicationUserId { get; set; }
 
-        public bool IsPublic { get; set; } // default
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
-        public bool IsPrivate { get; set; } // if private teachers must see "enroll students" link when at course page
+        public bool IsPrivate { get; set; }
 
-        public int SectionId { get; set; }
+        public virtual IEnumerable<Enrollment> Enrollments { get; set; } = new HashSet<Enrollment>();
 
-        public virtual SectionPage sectionPage { get; set; }
-
-        public int StudentId { get; set; }
-        public bool IsStudentEnrolled { get; set; } // student is enrolled with enterering course page . "unenroll" from course button on page is needed -> back to main private page
+        public bool IsStudentEnrolled { get; set; } // student is enrolled with entering course page . "unenroll" from course button on page is needed -> back to main private page
         // "add section" link only visible for teachers on page
         public DateTime Created { get; set; } //?? may be not needed
-        public DateTime StartDate { get; set; } // ??need to connect with  student access to course??
+        public DateTime StartDate { get; set; } // ??
         public DateTime EndDate { get; set; } //??
-        public IQueryable<SectionPage> Sections { get; set; } // where to initialize? Do I need it ?
+        public virtual IEnumerable<SectionPage> Sections { get; set; } = new HashSet<SectionPage>();
+
 
     }
 }

@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Poodle_e_Learning_Platform.Data.Contracts;
 using Poodle_e_Learning_Platform.Models;
-
+using System;
 
 namespace Poodle_e_Learning_Platform.Data
 {
-    public class ApplicationDbContext : IdentityDbContext, IDataContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>, IDataContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -14,28 +15,44 @@ namespace Poodle_e_Learning_Platform.Data
 
         }
 
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Course> Courses { get; set; }
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<SectionPage> SectionPages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // to check??
-            modelBuilder.Entity<Student>().HasMany(s => s.Courses);
 
-            modelBuilder.Entity<Teacher>()
-                .HasMany(t => t.Courses)
-                .WithOne(c => c.teacher) 
-                .HasForeignKey();
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(s => s.Enrollments)
+                .WithOne(e => e.ApplicationUser)
+                .HasForeignKey(e => e.ApplicationUserId);
 
+            modelBuilder.Entity<Course>()
+                .HasMany(c => c.Enrollments)
+                .WithOne(e => e.Course)
+                .HasForeignKey(e => e.CourseId);
 
-            modelBuilder.Entity<Course>().HasMany(c => c.Students).WithMany(s => s.Courses);
+            modelBuilder.Entity<Course>()
+                .HasOne(c => c.ApplicationUser)
+                .WithMany(t => t.Courses)
+                .HasForeignKey(c => c.ApplicationUserId);
 
+            modelBuilder.Entity<SectionPage>()
+                .HasOne(sp => sp.Course)
+                .WithMany(c => c.Sections)
+                .HasForeignKey(sp => sp.CourseId);
 
-            modelBuilder.Seed();
+            modelBuilder.Entity<Course>(c =>
+            {
+                c.HasIndex(cc => cc.Title).IsUnique();
+            });
+
+            modelBuilder.Entity<Enrollment>()
+                .HasKey(e => new { e.CourseId, e.ApplicationUserId });
+
+            //becouse  cant find ApplicationUserId - Error
+            modelBuilder.Entity<ApplicationUser>()
+                .HasKey(ap => ap.Id);
         }
 
         void IDataContext.SaveChanges()

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Forum\Forum.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ServiceTests\" />
-  </ItemGroup>
-
 </Project>

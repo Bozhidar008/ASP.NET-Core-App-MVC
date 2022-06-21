@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\" />
-    <Folder Include="Controllers\ApiControllers\" />
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 

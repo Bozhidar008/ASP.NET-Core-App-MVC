@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\" />
+    <Folder Include="InputModels\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -23,7 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\" />
-    <Folder Include="InputModels\" />
+    <Folder Include="InputModels\Images\" />
+    <Folder Include="InputModels\Section\" />
   </ItemGroup>
 
   <ItemGroup>
